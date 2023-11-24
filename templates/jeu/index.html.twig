@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des jeux joués{% endblock %}
+
+{% block body %}
+<ul class="w-full flex flex-col items-center">
+    {% for jeu in jeux %}
+    <li class="max-w-7xl">
+        <a href="#">
+            <figure class="flex flex-row gap-1">
+                <img src="{{ jeu.image }}" alt="{{ jeu.Titre }}">
+                <figcaption>
+                    <h2 class="text-lg text-orange-400">{{jeu.Titre}}</h2>
+                    <p>{{ jeu.dateSortie | date('d/m/Y')}}</p>
+                    <p>Note : {{ jeu.note}}</p>
+                    <p>Avis : {{ jeu.avis}}</p>
+                </figcaption>
+            </figure>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
