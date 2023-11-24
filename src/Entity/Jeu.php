@@ -29,6 +29,9 @@ class Jeu
     #[ORM\Column(type: Types::TEXT)]
     private ?string $avis = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateTest = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Jeu
     public function setAvis(string $avis): static
     {
         $this->avis = $avis;
+
+        return $this;
+    }
+
+    public function getDateTest(): ?\DateTimeInterface
+    {
+        return $this->dateTest;
+    }
+
+    public function setDateTest(?\DateTimeInterface $dateTest): static
+    {
+        $this->dateTest = $dateTest;
 
         return $this;
     }
