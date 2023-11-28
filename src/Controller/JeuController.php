@@ -37,14 +37,25 @@ class JeuController extends AbstractController
         $form = $this->createForm(JeuType::class, $jeu); // crée mon formulaire à partir du builder EntrepriseType
         $form->handleRequest($request); // quand une action est effectué sur le formulaire, récupère les données
 
-        if ($form->isSubmitted() && $form->isValid()) { // is valid = sécurité des champs
+        if ($form->isSubmitted() && $form->isValid()) {
+            // on recupere l'image transmise
+            $image = $form->get('image')->getData();
 
-            $jeu = $form->getData(); // récupère les données du formulaire et les envoie dans entreprise
-            //vers la bdd
+            // on genere un nouveau nom de fichier
+            $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+            // on copie le fichier dans le dossier uploads
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+
+            // on stocke l'image dans la base de données
+            $jeu->setImage($fichier);
 
             $entityManager = $doctrine->getManager();
-            $entityManager->persist($jeu); // constituer l'objet / prepare
-            $entityManager->flush(); // ajout en bdd / insert into 
+            $entityManager->persist($jeu);
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_jeu');
         }
@@ -54,5 +65,35 @@ class JeuController extends AbstractController
             'formAddJeu' => $form->createView(),
             'edit' => $jeu->getId(), //important pour verifier si employe existe et mettre une condition sur la view
         ]);
+    }
+
+
+    #[Route('/jeu/delete/{id}', name: 'delete_jeu')] // supprimer le produit
+    public function delete(ManagerRegistry $doctrine, Jeu $jeu = null): Response
+    {
+        if ($jeu) {
+
+            $entityManager = $doctrine->getManager();
+
+            // Supprimer les images associées
+            $image = $jeu->getImage();
+
+
+            $imagePath = $this->getParameter('images_directory') . '/' . $image;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $entityManager->remove($jeu);
+
+
+
+            // Supprimer le jeu
+            $entityManager->remove($jeu);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_jeu');
+        } else {
+            return $this->redirectToRoute('app_jeu');
+        }
     }
 }
