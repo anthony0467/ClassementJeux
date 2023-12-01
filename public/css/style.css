@@ -40,6 +40,14 @@ background: green!important;
   margin: 1rem 0;
 }
 
+.checkbox div{
+display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
+  align-items: center;
+}
+
 #jeu_image{
     color: rgb(251 146 60)
 }
@@ -48,6 +56,9 @@ background: green!important;
     background-position: center;
     transition: all 0.5s ease;
     overflow: hidden; /* Pour cacher les parties de l'image qui dépassent */
+
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.2588235294);
 }
 
 .card img {
@@ -65,6 +76,24 @@ background: green!important;
     object-position: right;
 }
 
+.icone-platine{
+    width: 50px!important;
+    height: auto;
+
+position: absolute;
+  top: 7px;
+  left: 5px;
+  background: black;
+  border-radius: 8px;
+  padding: .25rem;
+}
+
+.jeu-terminer{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.2rem .35rem;
+}
 
 /**************************************************************** show ****************************************************************/
 
@@ -72,4 +101,9 @@ background: green!important;
     height: 500px;
     object-fit: cover;
     object-position: center;
+}
+
+.icone-platine-show{
+    width: 50px;
+  height: auto!important;
 }
