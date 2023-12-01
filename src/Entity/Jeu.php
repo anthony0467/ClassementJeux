@@ -32,6 +32,12 @@ class Jeu
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateTest = null;
 
+    #[ORM\Column]
+    private ?bool $platine = false;
+
+    #[ORM\Column]
+    private ?bool $terminer = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +111,30 @@ class Jeu
     public function setDateTest(?\DateTimeInterface $dateTest): static
     {
         $this->dateTest = $dateTest;
+
+        return $this;
+    }
+
+    public function isPlatine(): ?bool
+    {
+        return $this->platine;
+    }
+
+    public function setPlatine(bool $platine): static
+    {
+        $this->platine = $platine;
+
+        return $this;
+    }
+
+    public function isTerminer(): ?bool
+    {
+        return $this->terminer;
+    }
+
+    public function setTerminer(bool $terminer): static
+    {
+        $this->terminer = $terminer;
 
         return $this;
     }
