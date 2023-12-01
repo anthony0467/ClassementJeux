@@ -67,6 +67,22 @@ class JeuController extends AbstractController
         ]);
     }
 
+    #[Route('/jeu/show/{id}', name: 'show_jeu')]
+    public function show(ManagerRegistry $doctrine, Jeu $jeu = null, Request $request): Response
+    {
+        if ($jeu === null) {
+            // Si le produit n'existe pas, redirigez l'utilisateur vers une page d'erreur ou une autre page appropriée.
+            return $this->redirectToRoute('app_home');
+        }
+
+
+
+        return $this->render('jeu/show.html.twig', [
+            'controller_name' => 'HomeController',
+            'jeu' => $jeu,
+        ]);
+    }
+
 
     #[Route('/jeu/delete/{id}', name: 'delete_jeu')] // supprimer le produit
     public function delete(ManagerRegistry $doctrine, Jeu $jeu = null): Response
