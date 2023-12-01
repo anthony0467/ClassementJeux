@@ -1,3 +1,75 @@
+body{
+    perspective: 1000px;
+}
+
 p{
     color: white;
+}
+
+.form-jeu{
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+form div{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    color: rgb(251 146 60)
+}
+
+form input{
+    padding: .5rem;
+}
+
+form button{
+background: green!important;
+  color: white;
+  padding: .5rem;
+  margin: 1rem 0;
+}
+
+#jeu_image{
+    color: rgb(251 146 60)
+}
+
+.card {
+    background-position: center;
+    transition: all 0.5s ease;
+    overflow: hidden; /* Pour cacher les parties de l'image qui dépassent */
+}
+
+.card img {
+    object-position: left;
+    transition: .5s;
+    width: 100%; /* Ajustez selon la largeur initiale de vos images */
+}
+
+.card:hover {
+    background-position: 80%;
+    transform: rotate3d(1, 1, 1, -20deg);
+}
+
+.card:hover img {
+    object-position: right;
+}
+
+
+/**************************************************************** show ****************************************************************/
+
+.image-jeu img{
+    height: 500px;
+    object-fit: cover;
+    object-position: center;
 }

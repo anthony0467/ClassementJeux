@@ -11,8 +11,9 @@
         jeu</a>
 </div>
 
-<ul class="w-full flex flex-col gap-5 items-center justify-between">
+<ul class="w-full flex flex-row gap-5 flex-wrap justify-around my-10">
     {% for jeu in jeux %}
+    <!--
     <li class="w-3/4">
         <a href="#">
             <figure class="flex flex-row gap-5 items-center">
@@ -35,6 +36,31 @@
                 </figcaption>
             </figure>
         </a>
+    </li>
+    -->
+    <li class="bg-black rounded-t-lg card max-w-xs">
+        <figure class="flex flex-col gap-5 items-center justify-between">
+            <img class="max-w-xs rounded-t-lg h-52" src="{{ asset('uploads/images/' ~ jeu.image) }}"
+                alt="{{ jeu.Titre }}">
+            <figcaption class="w-full p-3 ">
+
+                <h2 class="text-xl text-orange-400">{{jeu.Titre}}</h2>
+                <p>{{ jeu.dateSortie | date('d/m/Y')}}</p>
+
+
+                <p class="my-1">Note : {{ jeu.note}}</p>
+                <div class="flex gap-5 items-center">
+                    <a class="bg-amber-700 text-white py-1.5 px-3 my-1 rounded-md"
+                        href="{{path('edit_jeu', { id: jeu.id })}}">Modifier</a>
+
+
+                    <a href="{{path('show_jeu', {id: jeu.id })}}"
+                        class="bg-amber-700 text-white py-1.5 px-2 my-1 rounded-md">Voir mon avis</a>
+                    <a class="grow text-right" href="{{path('delete_jeu', { id: jeu.id })}}"><i
+                            class="fa-solid fa-trash bg-rose-800 p-2.5 rounded-md" style="color: #ffffff;"></i></a>
+                </div>
+            </figcaption>
+        </figure>
     </li>
     {% endfor %}
 </ul>
