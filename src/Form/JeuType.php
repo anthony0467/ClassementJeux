@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Jeu;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\File;
@@ -24,6 +25,14 @@ class JeuType extends AbstractType
             ->add('Titre', TextType::class)
             ->add('dateSortie', DateType::class, ['widget' => 'single_text', 'attr' => ['class' => 'form-control']])
             ->add('note', NumberType::class)
+            ->add('terminer', CheckboxType::class, [
+                'label' => 'Arriver au bout du jeu ?', // Facultatif : étiquette de la case à cocher
+                'required' => false, // Indique que le champ n'est pas obligatoire
+            ])
+            ->add('platine', CheckboxType::class, [
+                'label' => 'Le jeu a t-il était platiné?', // Facultatif : étiquette de la case à cocher
+                'required' => false, // Indique que le champ n'est pas obligatoire
+            ])
             ->add('image', FileType::class, [
                 'label' =>  'Ajoute une photo',
                 'multiple' => false,
@@ -36,7 +45,8 @@ class JeuType extends AbstractType
                         'maxSizeMessage' => 'La taille maximale autorisée est de {{ limit }}.',
                         'mimeTypes' => [
                             'image/jpeg',
-                            'image/png'
+                            'image/png',
+                            'image/webp',
                         ],
                         'mimeTypesMessage' => 'Veuillez télécharger une image valide (JPEG, PNG, GIF)',
                     ])
@@ -44,7 +54,11 @@ class JeuType extends AbstractType
                 ],
                 'label_attr' => ['class' => 'file-label'],
             ])
-            ->add('avis', TextareaType::class)
+            ->add('avis', TextareaType::class, [
+                'attr' => [
+                    'rows' => 8, // Ajustez le nombre de lignes selon vos besoins
+                ],
+            ])
             //->add('dateTest')
             ->add('Ajouter', SubmitType::class);
     }
