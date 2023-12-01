@@ -33,6 +33,7 @@ class JeuController extends AbstractController
         if (!$jeu) {
             $jeu = new Jeu();
         }
+        $imagePath = $jeu->getImage();
 
         $form = $this->createForm(JeuType::class, $jeu); // crée mon formulaire à partir du builder EntrepriseType
         $form->handleRequest($request); // quand une action est effectué sur le formulaire, récupère les données
@@ -40,18 +41,22 @@ class JeuController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // on recupere l'image transmise
             $image = $form->get('image')->getData();
+            if ($image) {
+                // on genere un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
 
-            // on genere un nouveau nom de fichier
-            $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                // on copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
 
-            // on copie le fichier dans le dossier uploads
-            $image->move(
-                $this->getParameter('images_directory'),
-                $fichier
-            );
-
-            // on stocke l'image dans la base de données
-            $jeu->setImage($fichier);
+                // on stocke l'image dans la base de données
+                $jeu->setImage($fichier);
+            } else {
+                // Aucun nouveau fichier, restaurer le chemin de l'image existante
+                $jeu->setImage($imagePath);
+            }
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($jeu);
