@@ -10,11 +10,29 @@
         <h1 class="text-4xl text-center my-1 text-orange-400">{{jeu.titre}}</h1>
 
         <p>Date de sortie : {{ jeu.dateSortie | date('d/m/Y')}}</p>
+        <div class="flex gap-1 my-1.5">
+            <p>Progression: </p>
+            {% if jeu.terminer %}
+            <span class="bg-lime-700 text-white px-1.5 py-0.5">Terminer</span>
+            {% else %}
+            <span class="bg-rose-700 text-white px-1.5 py-0.5">En cours</span>
+            {% endif %}
+        </div>
+        {% if jeu.platine %}
+        <div class="text-white flex items-center my-1.5">
+            <p>Platine :</p>
+            <img class="icone-platine-show" src="{{asset('uploads/images/ps4-platine.png')}}" alt="platine playstation">
+        </div>
+        {% else %}
+        <div class="flex gap-1">
+            <p>Platine :</p>
+            <p class="bg-rose-700 text-white px-1.5 py-0.5">En cours</p>
+        </div>
+        {% endif %}
         <p>Avis: {{ jeu.avis }}</p>
         <p>Note: {{jeu.note }}</p>
     </div>
 </div>
 
-{{ dump(jeu) }}
 
 {% endblock %}
