@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Jeu;
 use App\Form\JeuType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -58,6 +59,8 @@ class JeuController extends AbstractController
                 $jeu->setImage($imagePath);
             }
 
+            $now = new DateTime(); // objet date
+            $jeu->setDateTest($now); // installe ma date
             $entityManager = $doctrine->getManager();
             $entityManager->persist($jeu);
             $entityManager->flush();

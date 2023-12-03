@@ -29,7 +29,7 @@ class Jeu
     #[ORM\Column(type: Types::TEXT)]
     private ?string $avis = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $dateTest = null;
 
     #[ORM\Column]
