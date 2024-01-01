@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JeuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,6 +42,14 @@ class Jeu
 
     #[ORM\ManyToOne(inversedBy: 'jeu')]
     private ?Categorie $categorie = null;
+
+    #[ORM\ManyToMany(targetEntity: Console::class, mappedBy: 'jeu')]
+    private Collection $consoles;
+
+    public function __construct()
+    {
+        $this->consoles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +160,33 @@ class Jeu
     public function setCategorie(?Categorie $categorie): static
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Console>
+     */
+    public function getConsoles(): Collection
+    {
+        return $this->consoles;
+    }
+
+    public function addConsole(Console $console): static
+    {
+        if (!$this->consoles->contains($console)) {
+            $this->consoles->add($console);
+            $console->addJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsole(Console $console): static
+    {
+        if ($this->consoles->removeElement($console)) {
+            $console->removeJeu($this);
+        }
 
         return $this;
     }
