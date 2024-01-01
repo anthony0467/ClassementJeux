@@ -59,6 +59,18 @@ class JeuController extends AbstractController
                 $jeu->setImage($imagePath);
             }
 
+
+            // Récupérer les consoles associées depuis le formulaire
+            $consoles = $form->get('consoles')->getData();
+
+
+            // Associer les consoles au jeu
+            foreach ($consoles as $console) {
+                $console->addJeu($jeu); // Assurez-vous que cette méthode est correctement définie dans votre entité Console
+                $jeu->addConsole($console);
+            }
+
+
             $now = new DateTime(); // objet date
             $jeu->setDateTest($now); // installe ma date
             $entityManager = $doctrine->getManager();
