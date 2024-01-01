@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Jeu;
+use App\Entity\Console;
 use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,6 +26,13 @@ class JeuType extends AbstractType
     {
         $builder
             ->add('Titre', TextType::class)
+            ->add('consoles', EntityType::class, [
+                'class' => Console::class,
+                'multiple' => true,
+                //'expanded' => true,
+                "choice_label" => 'nom',
+                'label' => 'Support',
+            ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 "choice_label" => 'nom',
