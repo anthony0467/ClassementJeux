@@ -1,10 +1,16 @@
 body{
-    perspective: 1000px;
     min-height: 100vh;
 }
 
 p{
     color: white;
+}
+
+.img-logo{
+  height: 30px !important;
+  width: 75px;
+  display: block;
+  object-fit: contain!important;
 }
 
 .form-jeu{
@@ -133,7 +139,7 @@ overflow:visible;
 background: #000;
 border-right:1px solid;
 @include border-primary-color;
-position:absolute;
+position:fixed;
 top:0;
 bottom:0;
 height:100%;
